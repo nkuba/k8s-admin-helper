@@ -1,0 +1,34 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: read-pods
+  namespace: developement
+subjects:
+# For a user named “jane”
+- kind: User
+  name: "jane"
+  apiGroup: rbac.authorization.k8s.io
+# For a group named “frontend-admins”
+- kind: Group
+  name: "frontend-admins"
+  apiGroup: rbac.authorization.k8s.io
+# For the default service account in the kube-system namespace
+- kind: ServiceAccount
+  name: default
+  namespace: kube-system
+# For all service accounts in the “qa” namespace
+- kind: Group
+  name: system:serviceaccounts:qa
+  apiGroup: rbac.authorization.k8s.io
+# For all service accounts everywhere
+- kind: Group
+  name: system:serviceaccounts
+  apiGroup: rbac.authorization.k8s.io
+# For all authenticated users
+- kind: Group
+  name: system:authenticated # for unauthenticated users set to "system:unauthenticated"
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: Role
+  name: dev-role
+  apiGroup: rbac.authorization.k8s.io

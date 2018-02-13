@@ -1,0 +1,18 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ghost
+spec:
+  rules:
+    - host: ghost.192.168.99.100.nip.io
+      http:
+      paths: 
+        - backend:
+          serviceName: ghost
+          servicePort: 2368
+    - host: nginx.192.168.99.100.nip.io
+      http:
+      paths:
+        - backend:
+          serviceName: nginx
+          servicePort: 80

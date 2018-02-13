@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx
+spec:
+  selector:
+    app: nginx
+  ports:
+  - port: 80
+    type: NodePort
+#   nodePort is not required. If not provided Port will be assigned automatically.
+    nodePort: 8080

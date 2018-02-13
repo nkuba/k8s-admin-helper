@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: busybox
+spec:
+  nodeName: node3
+  containers:
+    - name: busybox
+      image: busybox
+      args:
+        - sleep
+        - "360"

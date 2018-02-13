@@ -1,0 +1,17 @@
+# NAME
+
+<intro>
+
+## Resources
+* [Documentation](https://kubernetes.io/docs/xxx)
+* [API Reference](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.9/xxx)
+
+## Kubectl commands
+
+`kubectl get xxx`
+
+## Manifests
+
+```yaml
+xxx
+```

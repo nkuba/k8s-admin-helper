@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: Pod
+metadata:
+    name: vip
+    labels:
+      env: test
+spec:
+    containers:
+        - name: vip1
+          image: busybox
+          args:
+              - sleep
+              - "1000000"
+        - name: vip2
+          image: busybox
+          args:
+              - sleep
+              - "1000000"
+        - name: vip3
+          image: busybox
+          args:
+              - sleep
+              - "1000000"
+        - name: vip4
+          image: busybox
+          args:
+              - sleep
+              - "1000000"
+    nodeSelector:
+       status: other
+#       kubernetes.io/hostname: node3
