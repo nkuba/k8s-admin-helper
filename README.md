@@ -2,19 +2,19 @@
 
 This project contains selection of resources helpful for Kubernetes Administrators.
 
-## Manifests
 Manifests templates are created based on official Kubernetes [Documentation](https://kubernetes.io/docs/) 
 and [API Reference v1.9](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.9/)
 
-## Cheat Sheet
 Cheat sheet commands are based on official [kubectl Cheat Sheet](https://kubernetes.io/docs/reference/kubectl/cheatsheet/)
 
-### Autocompletion
+---
+
+## Autocompletion
 ```bash
 source <(kubectl completion bash)
 ```
 
-### Configuration and Maintenance
+## Configuration and Maintenance
 ```bash
 kubectl config view
 kubectl config current-context
@@ -25,24 +25,24 @@ kubectl get componentstatuses
 kubectl get events
 
 # Logs
-kubectl logs --namespace=NAMESPACE --container=CONTAINER POD_NAME
-kubectl logs --previous ${POD_NAME} -c ${CONTAINER_NAME}
+kubectl logs --namespace=NAMESPACE POD_NAME --container=CONTAINER_NAME
+kubectl logs --previous POD_NAME --container=CONTAINER_NAME
 
 # Namespaces
 kubectl get namespace
 kubectl create namespace NAMESPACE
 ```
 
-### Resource lifecycle operations
+## Resource lifecycle operations
 
-#### Create
+### Create
 ```bash
 kubectl create -f my-manifest.yaml            # create from file
 kubectl create -f my1.yaml -f my2.yaml        # create from multiple files
 kubectl create -f dir                         # create from files in dir
 ```
 
-#### Read
+### Read
 ```bash
 kubectl get pods                              # List all pods in the namespace
 kubectl get pods --all-namespaces             # List all pods in all namespaces
@@ -72,13 +72,13 @@ kubectl get nodes -o jsonpath='{.items[*].status.addresses[?(@.type=="ExternalIP
 sel=$(kubectl get deployment nginx-deployment -o=json | jq -j '.spec.selector.matchLabels | to_entries | map([.key,.value] | join("=")) | join(",")')
 kubectl get pods -l=$sel -o jsonpath='{range .items[*]}{.metadata.name}{"\n"}'
 ```
-#### Update
+### Update
 ```bash
 # Force replace, delete and then re-create the resource. Will cause a service outage.
 kubectl replace --force -f ./pod.json
 ```
 
-### Node
+## Node
 ```bash
 kubectl label node NODE KEY=VALUE
 
@@ -95,23 +95,39 @@ kubectl drain NODE_NAME
 kubectl uncordon NODE_NAME
 ```
 
-### etcd
+## etcd
 * [Operating etcd clusters for Kubernetes](https://kubernetes.io/docs/tasks/administer-cluster/configure-upgrade-etcd/)
+
 GitHub:
 * [etcd](https://github.com/coreos/etcd)
 * [etcdctl](https://github.com/coreos/etcd/tree/master/etcdctl#etcdctl)
 
+### Global flags
 ```bash
-ETCDCTL_API=3 etcdctl member list
+# API version
+export ETCDCTL_API=3
 
+# Certificates
+export ETCDCTL_CACERT=/tmp/ca.pem
+export ETCDCTL_CERT=/tmp/cert.pem
+export ETCDCTL_KEY=/tmp/key.pem
+```
+
+### Commands
+```bash
+# List etcd cluster members
+etcdctl member list
+
+# List resources
 etcdctl ls
 etcdctl ls /registry
 
-ETCDCTL_API=3 etcdctl --endpoints <ENDPOINT> snapshot save snapshotdb
-ETCDCTL_API=3 etcdctl --write-out=table snapshot status snapshotdb
+# Backup
+etcdctl --endpoints <ENDPOINT> snapshot save snapshotdb
+etcdctl --write-out=table snapshot status snapshotdb
 ```
 
-### systemd
+## systemd
 ```bash
 systemctl list-units | grep kube
 
@@ -120,7 +136,7 @@ systemctl status kube-apiserver
 journalctl -u kubelet
 ```
 
-### Minikube
+## Minikube
 ```bash
 minikube start
 minikube ip
@@ -128,7 +144,7 @@ minikube version
 minikube ssh
 ```
 
-### containerd
+## containerd
 ```bash
 sudo ctr -n k8s.io containers list
 ```
