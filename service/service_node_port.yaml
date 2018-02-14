@@ -5,8 +5,8 @@ metadata:
 spec:
   selector:
     app: nginx
+  type: NodePort
   ports:
   - port: 80
-    type: NodePort
 #   nodePort is not required. If not provided Port will be assigned automatically.
     nodePort: 8080
