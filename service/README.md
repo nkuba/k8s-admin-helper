@@ -27,9 +27,10 @@ metadata:
 spec:
   selector:
     app: nginx
+  type: NodePort
   ports:
   - port: 80
-    type: NodePort
+    
     nodePort: 8080
 ```
 ## Service Types
